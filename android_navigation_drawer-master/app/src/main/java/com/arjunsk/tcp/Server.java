@@ -1,5 +1,7 @@
 package com.arjunsk.tcp;
 
+import com.arjunsk.drawer_activity.Device;
+import com.arjunsk.drawer_activity.MainActivity;
 import com.koushikdutta.async.*;
 import com.koushikdutta.async.callback.CompletedCallback;
 import com.koushikdutta.async.callback.DataCallback;
@@ -56,9 +58,12 @@ public class Server {
         socket.setDataCallback(new DataCallback() {
             @Override
             public void onDataAvailable(DataEmitter emitter, ByteBufferList bb) {
-                System.out.println("[Server] Received Message " + new String(bb.getAllByteArray()));
-
-                Util.writeAll(socket, "Hello Client".getBytes(), new CompletedCallback() {
+                String mensajeRecibido = new String(bb.getAllByteArray());
+                System.out.println("[Server] Received Message " + mensajeRecibido);
+                String[] splitMensajeRecibido = mensajeRecibido.split("=");
+                Device deviceAux = MainActivity.getDeviceById(splitMensajeRecibido[0]);
+                deviceAux.addCoordenada(splitMensajeRecibido[1]);
+                Util.writeAll(socket, "ok".getBytes(), new CompletedCallback() {
                     @Override
                     public void onCompleted(Exception ex) {
                         if (ex != null) throw new RuntimeException(ex);

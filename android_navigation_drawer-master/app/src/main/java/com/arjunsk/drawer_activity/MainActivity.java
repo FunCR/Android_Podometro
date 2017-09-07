@@ -175,25 +175,17 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
+    public static Device getDeviceById(String pId){
+        Device deviceAux = null;
 
-            case REQUEST_SELECT_DEVICE:
-                //When the DeviceListActivity return, with the selected device address
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    String deviceAddress = data.getStringExtra(BluetoothDevice.EXTRA_DEVICE);
-                    mDevice = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(deviceAddress);
-
-                    Log.d(TAG, "... onActivityResultdevice.address==" + mDevice + "mserviceValue" + mService);
-                    ((TextView) findViewById(R.id.deviceName)).setText(mDevice.getName() + " - connecting");
-                    mService.connect(deviceAddress);
-
-
-                }
-                break;
+        for (int i=0;i<listaDispositivos.size();i++){
+            deviceAux = listaDispositivos.get(i);
+            if (deviceAux.id.equals(pId)){
+                return deviceAux;
+            }
         }
-    }*/
+        return null;
+    }
 
 
 }

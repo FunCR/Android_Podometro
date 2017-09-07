@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,26 +105,40 @@ public class Fragment3 extends Fragment {
 
         Button buttonSendText = (Button) view.findViewById(R.id.btn_sendMSJ);
 
-        Toast.makeText(getActivity(), buttonSendText.getText(), Toast.LENGTH_LONG).show();
         buttonSendText.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
 
-                String message = "ab";
-                byte[] value;
-                try {
-                    //send data to service
-                    value = message.getBytes("UTF-8");
-                    mService.writeRXCharacteristic(value);
-                    //Update the log with time stamp
-                    showMessage("Enviando: "+message);
+                String ssidText = ((EditText) view.findViewById(R.id.et_ssid)).getText().toString();
+                String passwordText = ((EditText) view.findViewById(R.id.et_password)).getText().toString();
+                showMessage(ssidText);
+                showMessage(passwordText);
 
-                } catch (UnsupportedEncodingException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                String message = "SSID:"+ssidText+"PASS:"+passwordText+"ID:"+MainActivity.listaDispositivos.size();
+                showMessage(message);
+
+                if(mState == UART_PROFILE_CONNECTED){
+
+                    byte[] value;
+                    try {
+                        //send data to service
+                        value = message.getBytes("UTF-8");
+                        mService.writeRXCharacteristic(value);
+                        //Update the log with time stamp
+                        showMessage("Enviando: "+message);
+
+                    } catch (UnsupportedEncodingException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
                 }
+                else{
+                    showMessage("Necesita conectarse a un dispositivo");
+                }
+
 
             }
         });

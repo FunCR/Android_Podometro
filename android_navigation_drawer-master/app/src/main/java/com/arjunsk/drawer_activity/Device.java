@@ -8,17 +8,43 @@ import java.util.ArrayList;
 
 public class Device {
 
-    public String name, ip;
+    public String name, ip, id;
 
     public ArrayList<Coordenada> listaCoordenadasAcelerometro;
 
     public ArrayList<Coordenada> listaCoordenadasGiroscopio;
 
-    public Device(String name, String ip) {
+    public Device(String id) {
+        this.id = id;
+        listaCoordenadasAcelerometro = new ArrayList<Coordenada>();
+        listaCoordenadasGiroscopio = new ArrayList<Coordenada>();
+    }
+
+    public Device(String id, String name) {
+        this.id = id;
+        this.name = name;
+        listaCoordenadasAcelerometro = new ArrayList<Coordenada>();
+        listaCoordenadasGiroscopio = new ArrayList<Coordenada>();
+    }
+
+    public Device(String id, String name, String ip) {
+        this.id = id;
         this.name = name;
         this.ip = ip;
         listaCoordenadasAcelerometro = new ArrayList<Coordenada>();
         listaCoordenadasGiroscopio = new ArrayList<Coordenada>();
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
+
+    public void setIp(String ip){
+        this.ip = ip;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     //Recibe un parametro con el formato: "x:y:z:x:y:z"
